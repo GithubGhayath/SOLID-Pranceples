@@ -1,0 +1,88 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SingleResponsibilityPrinciple_SRP
+{
+	/*
+		Single Responsibility principle: A Class should have one and only one reason to change
+
+		Divide the notification class to sub class each one of them do only one process
+
+		the goals:
+			1- Easy to test
+			2- Save deploy time by making each one of these classes writing be one developer in same time
+			3- This code easy to edit
+	*/
+    public class LoggingService
+    {
+        public enum enMode { LogToFile, LogToDataBase, LogToEventViewer };
+
+        public void Log(string message, enMode Mode)
+        {
+            if (Mode == enMode.LogToEventViewer)
+            {
+                EventViewerLoggingService.Log(message);
+            }
+            else if(Mode == enMode.LogToFile)
+            {
+                FileLoggingService.Log(message);
+            }
+            else if(Mode == enMode.LogToDataBase)
+            {
+                DataBaseLoggingService.Log(message);
+            }
+        }
+
+       
+      
+     
+    }
+
+    public class FileLoggingService
+    {
+        public static void Log(string message)
+        {
+            //Code to log in file
+            Console.WriteLine($"\n\nMessage: {message} is logged to file");
+        }
+    }
+    public class DataBaseLoggingService
+    {
+        public static void Log(string message)
+        {
+            //Code to log in Database
+            Console.WriteLine($"\n\nMessage: {message} is logged to database");
+        }
+    }
+    public class EventViewerLoggingService
+    {
+        public static void Log(string message)
+        {
+            //Code to log in Event
+            Console.WriteLine($"\n\nMessage: {message} is logged to Event viewer");
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            LoggingService loggingService = new LoggingService();
+
+
+            //Logging to database
+            loggingService.Log("Error message", LoggingService.enMode.LogToDataBase);
+
+            //Logging to File
+            loggingService.Log("Error message", LoggingService.enMode.LogToFile);
+
+            //Logging to Event Viewer
+            loggingService.Log("Error message", LoggingService.enMode.LogToEventViewer);
+
+            Console.ReadLine();
+        }
+    }
+}

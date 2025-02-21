@@ -1,0 +1,65 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SingleResponsibilityPrinciple_SRP
+{
+    public class Notification
+    {
+        public enum enMode { SMSNotification, FaxNotification, EmailNotification };
+
+        public void Send(string To,string Message,enMode Mode)
+        {
+            if(Mode == enMode.SMSNotification)
+            {
+                SendSMS(To, Message);
+            }
+            else if(Mode == enMode.FaxNotification)
+            {
+                SendFax(To, Message);
+            }
+            else if( Mode == enMode.EmailNotification)
+            {
+                SendEmail(To, Message);
+            }
+        }
+
+        private void SendEmail(string To, string Message)
+        {
+            //Code for send email
+            Console.WriteLine($"\n\nEmail Sending to: {To},Contains: {Message}");
+        }
+        private void SendSMS(string To, string Message) 
+        {
+            //Code for send SMS
+            Console.WriteLine($"\n\nSMS Sending to: {To},Contains: {Message}");
+        }
+        private void SendFax(string To, string Message)
+        {
+            //Code for send FAX
+            Console.WriteLine($"\n\nFax Sending to: {To},Contains: {Message}");
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Notification notification = new Notification();
+
+
+            //Sending Email 
+            notification.Send("Ghayath", "This is new Email for test", Notification.enMode.EmailNotification);
+
+            //Sending SMS 
+            notification.Send("+963 222 111 222", "This is new SMS message for test", Notification.enMode.SMSNotification);
+
+            //Sending Fax 
+            notification.Send("+963 222 111 222", "This is new Fax for test", Notification.enMode.FaxNotification);
+
+            Console.ReadLine();
+        }
+    }
+}

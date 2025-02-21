@@ -1,0 +1,96 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SingleResponsibilityPrinciple_SRP
+{
+
+    public class LoggingService
+    {
+        //This class becomes closed for modifications
+       
+
+        // public enum enMode { LogToFile, LogToDataBase, LogToEventViewer };
+
+        private ILoggingService _LoggingService;
+
+        public LoggingService(ILoggingService loggingService)
+        {
+            _LoggingService = loggingService;
+        }
+
+        public void Log(string message)
+        {
+
+            _LoggingService.Log(message);
+            //if (Mode == enMode.LogToEventViewer)
+            //{
+            //    EventViewerLoggingService.Log(message);
+            //}
+            //else if(Mode == enMode.LogToFile)
+            //{
+            //    FileLoggingService.Log(message);
+            //}
+            //else if(Mode == enMode.LogToDataBase)
+            //{
+            //    DataBaseLoggingService.Log(message);
+            //}
+        }
+    }
+
+    public interface ILoggingService
+    {
+         void Log(string message);
+    }
+
+    public class FileLoggingService:ILoggingService
+    {
+        public void Log(string message)
+        {
+            //Code to log in file
+            Console.WriteLine($"\n\nMessage: {message} is logged to file");
+        }
+    }
+    public class DataBaseLoggingService : ILoggingService
+    {
+        public void Log(string message)
+        {
+            //Code to log in Database
+            Console.WriteLine($"\n\nMessage: {message} is logged to database");
+        }
+    }
+    public class EventViewerLoggingService : ILoggingService
+    {
+        public void Log(string message)
+        {
+            //Code to log in Event
+            Console.WriteLine($"\n\nMessage: {message} is logged to Event viewer");
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            LoggingService loggingService = new LoggingService(new DataBaseLoggingService());
+
+
+            //Logging to database
+            loggingService.Log("Error message");
+
+
+            loggingService = new LoggingService(new FileLoggingService());
+            //Logging to File
+            loggingService.Log("Error message");
+
+
+            loggingService = new LoggingService(new EventViewerLoggingService());
+            //Logging to Event Viewer
+            loggingService.Log("Error message");
+
+            Console.ReadLine();
+        }
+    }
+}

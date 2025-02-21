@@ -1,0 +1,66 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SingleResponsibilityPrinciple_SRP
+{
+
+    public class LoggingService
+    {
+        public enum enMode { LogToFile, LogToDataBase, LogToEventViewer };
+
+        public void Log(string message, enMode Mode)
+        {
+            if (Mode == enMode.LogToEventViewer)
+            {
+                LogToEvent(message);
+            }
+            else if(Mode == enMode.LogToFile)
+            {
+                LogToFile(message);
+            }
+            else if(Mode == enMode.LogToDataBase)
+            {
+                LogToDataBase(message);
+            }
+        }
+
+        private void LogToFile(string message) 
+        {
+            //Code to log in file
+            Console.WriteLine($"Message: {message} is logged to file");
+        }
+        private void LogToDataBase(string message) 
+        {
+            //Code to log in Database
+            Console.WriteLine($"Message: {message} is logged to database");
+        }
+        private void LogToEvent(string message)
+        {
+            //Code to log in Event
+            Console.WriteLine($"Message: {message} is logged to Event viewer");
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            LoggingService loggingService = new LoggingService();
+
+
+            //Logging to database
+            loggingService.Log("Error message", LoggingService.enMode.LogToDataBase);
+
+            //Logging to File
+            loggingService.Log("Error message", LoggingService.enMode.LogToFile);
+
+            //Logging to Event Viewer
+            loggingService.Log("Error message", LoggingService.enMode.LogToEventViewer);
+
+            Console.ReadLine();
+        }
+    }
+}
