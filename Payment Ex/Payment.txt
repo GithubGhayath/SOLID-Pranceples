@@ -1,0 +1,77 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SingleResponsibilityPrinciple_SRP
+{
+
+    public class Payments
+    {
+        public enum emMode { PayPal, CreditCard, BankTransfer, Bitcoin }
+
+        public void Pay(string method, emMode mode)
+        {
+            if (mode == emMode.PayPal)
+            {
+                PayPalMethod(method);
+            }
+            else if (mode == emMode.CreditCard)
+            {
+                CreditCardMethod(method);
+            }
+            else if (mode == emMode.BankTransfer)
+            {
+                BankTransferMethod(method);
+            }
+            else if (mode == emMode.Bitcoin)
+            {
+                BitcoinMethod(method);
+            }
+        }
+
+
+        public void PayPalMethod(string message)
+        {
+            Console.WriteLine(message);
+        }
+        public void CreditCardMethod(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        public void BankTransferMethod(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        public void BitcoinMethod(string message)
+        {
+            Console.WriteLine(message);
+        }
+    }
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Payments payments = new Payments();
+
+            //PayPal method
+            payments.Pay("\n\nPay process done by PayPal", Payments.emMode.PayPal);
+
+            //BankTransfer method
+            payments.Pay("\n\nPay process done by BankTransfer", Payments.emMode.BankTransfer);
+
+            //CreditCard method
+            payments.Pay("\n\nPay process done by CreditCard", Payments.emMode.CreditCard);
+
+            //Bitcoin method
+            payments.Pay("\n\nPay process done by Bitcoin", Payments.emMode.Bitcoin);
+
+            Console.ReadLine();
+        }
+    }
+}

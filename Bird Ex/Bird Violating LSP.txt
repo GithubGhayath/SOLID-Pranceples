@@ -1,0 +1,66 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SingleResponsibilityPrinciple_SRP
+{
+  
+  
+    public class Bird
+    {
+        public virtual void Eat()
+        {
+            Console.WriteLine("Bird Eating...");
+        }
+
+        public virtual void Fly()
+        {
+            Console.WriteLine("Bird Flying...");
+        }
+    }
+
+    public class Eagle : Bird
+    {
+        public override void Eat()
+        {
+            Console.WriteLine("Eagle Eating...");
+        }
+
+        public override void Fly()
+        {
+            Console.WriteLine("Eagle Flying...");
+        }
+    }
+
+    public class Ostrich : Bird
+    {
+        public override void Eat()
+        {
+            Console.WriteLine("Ostrich eating....");
+        }
+
+        public override void Fly()
+        {
+            throw new ExecutionEngineException("Ostrich can't flying");
+        }
+    }
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Eagle eagle = new Eagle();
+            eagle.Eat(); // eagle earing
+            eagle.Fly(); // eagle flying
+
+            Ostrich ostrich = new Ostrich();
+            ostrich.Eat(); // Ostrich eating
+            ostrich.Fly(); //throws exception Ostrich can't flying
+
+            Console.ReadLine();
+        }
+    }
+}

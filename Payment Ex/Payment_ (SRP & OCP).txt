@@ -1,0 +1,107 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SingleResponsibilityPrinciple_SRP
+{
+    public interface IPayment
+    {
+        void Pay(string message);
+    }
+    public class Payments
+    {
+        //This class new compatible with OCP
+
+
+        //public enum emMode { PayPal, CreditCard, BankTransfer, Bitcoin }
+
+
+        IPayment payment;
+        public Payments(IPayment payment)
+        {
+            this.payment = payment;
+        }
+
+
+        public void Pay(string method)
+        {
+            payment.Pay(method);
+            //if(mode == emMode.PayPal)
+            //{
+            //    PayPalPaymentProcess.Pay(method);
+            //}
+            //else if(mode == emMode.CreditCard)
+            //{
+            //    CreditCardPaymentProcess.Pay(method);
+            //}
+            //else if(mode == emMode.BankTransfer)
+            //{
+            //    BankTransferPaymentProcess.Pay(method);
+            //}
+            //else if(mode == emMode.Bitcoin)
+            //{
+            //    BitcoinPaymentProcess.Pay(method);
+            //}
+        }      
+    }
+
+
+    public class PayPalPaymentProcess: IPayment
+    {
+        public  void Pay(string message)
+        {
+            Console.WriteLine(message);
+        }
+    }
+    public class BitcoinPaymentProcess : IPayment
+    {
+        public  void Pay(string message)
+        {
+            Console.WriteLine(message);
+        }
+    }
+    public class BankTransferPaymentProcess : IPayment
+    {
+        public  void Pay(string message)
+        {
+            Console.WriteLine(message);
+        }
+    }
+    public class CreditCardPaymentProcess : IPayment
+    {
+        public  void Pay(string message)
+        {
+            Console.WriteLine(message);
+        }
+    }
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Payments payments = new Payments(new PayPalPaymentProcess());
+
+            //PayPal method
+            payments.Pay("\n\nPay process done by PayPal");
+
+
+
+            //BankTransfer method
+            payments = new Payments(new BankTransferPaymentProcess());
+            payments.Pay("\n\nPay process done by BankTransfer");
+
+            //CreditCard method
+            payments = new Payments(new CreditCardPaymentProcess());
+            payments.Pay("\n\nPay process done by CreditCard");
+
+            //Bitcoin method
+            payments = new Payments(new BitcoinPaymentProcess());
+            payments.Pay("\n\nPay process done by Bitcoin");
+
+            Console.ReadLine();
+        }
+    }
+}

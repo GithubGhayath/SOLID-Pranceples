@@ -1,0 +1,91 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SingleResponsibilityPrinciple_SRP
+{
+
+    public class Payments
+    {
+        public enum emMode { PayPal, CreditCard, BankTransfer, Bitcoin }
+
+        public void Pay(string method,emMode mode)
+        {
+            if(mode == emMode.PayPal)
+            {
+                PayPalPaymentProcess.Pay(method);
+            }
+            else if(mode == emMode.CreditCard)
+            {
+                CreditCardPaymentProcess.Pay(method);
+            }
+            else if(mode == emMode.BankTransfer)
+            {
+                BankTransferPaymentProcess.Pay(method);
+            }
+            else if(mode == emMode.Bitcoin)
+            {
+                BitcoinPaymentProcess.Pay(method);
+            }
+        }
+
+       
+
+      
+       
+       
+    }
+    public class PayPalPaymentProcess
+    {
+        public static void Pay(string message)
+        {
+            Console.WriteLine(message);
+        }
+    }
+    public class BitcoinPaymentProcess
+    {
+        public static void Pay(string message)
+        {
+            Console.WriteLine(message);
+        }
+    }
+    public class BankTransferPaymentProcess
+    {
+        public static void Pay(string message)
+        {
+            Console.WriteLine(message);
+        }
+    }
+    public class CreditCardPaymentProcess
+    {
+        public static void Pay(string message)
+        {
+            Console.WriteLine(message);
+        }
+    }
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Payments payments = new Payments();
+
+            //PayPal method
+            payments.Pay("\n\nPay process done by PayPal",Payments.emMode.PayPal);
+
+            //BankTransfer method
+            payments.Pay("\n\nPay process done by BankTransfer", Payments.emMode.BankTransfer);
+
+            //CreditCard method
+            payments.Pay("\n\nPay process done by CreditCard", Payments.emMode.CreditCard);
+
+            //Bitcoin method
+            payments.Pay("\n\nPay process done by Bitcoin", Payments.emMode.Bitcoin);
+
+            Console.ReadLine();
+        }
+    }
+}

@@ -1,0 +1,87 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SingleResponsibilityPrinciple_SRP
+{
+    public class Person
+    {
+        public virtual void SendEmail()
+        {
+            Console.WriteLine("Sending email...");
+        }
+    }
+
+    public class Employee : Person
+    {
+        public virtual void PaySalary()
+        {
+            Console.WriteLine("paying Salary to employee...");
+        }
+        public override void SendEmail()
+        {
+            Console.WriteLine("Sending email to employee...");
+        }
+    }
+
+    public class Manager : Employee
+    {
+        public override void PaySalary()
+        {
+            Console.WriteLine("Paying salary to Manager...");
+        }
+        public override void SendEmail()
+        {
+            Console.WriteLine("Sending email to Manager...");
+        }
+    }
+
+    public class Student : Person
+    {
+       
+        public override void SendEmail()
+        {
+            Console.WriteLine("Sending email to Student...");
+        }
+    }
+
+    public class User : Person
+    {
+      
+        public override void SendEmail()
+        {
+            Console.WriteLine("Sending email to User...");
+        }
+    }
+
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Employee employee = new Employee();
+            employee.PaySalary();  //Paying salary to Employee...
+            employee.SendEmail(); //Sending email to Employee...
+
+            
+            Manager manager = new Manager();
+            manager.PaySalary();  //Paying salary to Manager...
+            manager.SendEmail();  //Sending email to Manager...
+
+
+            Student student = new Student();
+            student.SendEmail();  //Sending email to Student...
+           // student.PaySalary(); //this object doesn't contains PaySalary() method
+
+
+            User user = new User();
+            user.SendEmail();  //Sending email to User...
+           // user.PaySalary(); //this object doesn't contains PaySalary() method
+
+            Console.ReadLine();
+        }
+    }
+}

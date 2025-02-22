@@ -1,0 +1,63 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SingleResponsibilityPrinciple_SRP
+{
+    public class Vehicle
+    {
+       
+        public virtual void Drive()
+        {
+            Console.WriteLine("Drive starting...");
+        }
+    }
+    public class MotorVehicle : Vehicle
+    {
+        public virtual void StartEngine()
+        {
+            Console.WriteLine("Engine starting...");
+        }
+    }
+
+    public class Car : MotorVehicle
+    {
+        public override void StartEngine()
+        {
+            Console.WriteLine("Car engine starting...");
+        }
+        public override void Drive()
+        {
+            Console.WriteLine("Car driving...");
+        }
+    }
+
+    public class Bicycle : Vehicle
+    {
+      
+        public override void Drive()
+        {
+            Console.WriteLine("Bicycle Driving...");
+        }
+    }
+
+
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+           Car car = new Car();
+            car.StartEngine(); // Car engine starting...
+            car.Drive();      // Car driving...
+
+            Bicycle bicycle = new Bicycle();
+            bicycle.Drive();    //Bicycle Driving...
+            //bicycle.StartEngine(); //  This object doesn't contains StartEngine()
+            Console.ReadLine();
+        }
+    }
+}
