@@ -1,0 +1,66 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SingleResponsibilityPrinciple_SRP
+{
+   public interface IPayWithPayPal { void PayWithPayPal(); }
+   public interface IPayWithBitcoin { void PayWithBitcoin(); }
+   public interface IPayWithCreditCard { void PayWithCreditCard(); }
+    public interface IPayment : IPayWithBitcoin, IPayWithCreditCard, IPayWithPayPal { }
+
+
+    public class clsPayWithPayPal : IPayWithPayPal
+    {
+      
+        public void PayWithPayPal()
+        {
+            Console.WriteLine("Paying with paypal...");
+        }
+    }
+    public class clsPayWithBitcoin : IPayWithBitcoin
+    {
+        public void PayWithBitcoin()
+        {
+            Console.WriteLine("Paying with Bitcoin...");
+        }
+
+      
+    }
+    public class clsPayWithCreditCard : IPayWithCreditCard
+    {
+        public void PayWithCreditCard()
+        {
+            Console.WriteLine("Paying with Credit card...");
+        }
+
+    }
+
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            clsPayWithBitcoin clsPayWithBitcoin = new clsPayWithBitcoin();
+            clsPayWithCreditCard clsPayWithCreditCard = new clsPayWithCreditCard();
+            clsPayWithPayPal clsPayWithPayPal = new clsPayWithPayPal();
+
+
+            clsPayWithBitcoin.PayWithBitcoin();
+           
+
+
+            clsPayWithCreditCard.PayWithCreditCard();
+          
+
+            clsPayWithPayPal.PayWithPayPal();
+
+
+
+            Console.ReadLine();
+        }
+    }
+}

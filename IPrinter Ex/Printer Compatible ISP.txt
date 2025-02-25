@@ -1,0 +1,79 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SingleResponsibilityPrinciple_SRP
+{
+
+    public interface IPrint
+    {
+        void Print();
+    }
+    public interface IScan
+    {
+        void Scan();
+    }
+
+    public interface IFax
+    {
+        void Fax();
+    }
+
+    public interface IPrinter:IPrint,IScan,IFax{}
+
+    public class BasicPrinter: IPrint
+    {
+   
+        public void Print()
+        {
+            Console.WriteLine("Printing...");
+        }
+      
+
+    }
+    public class AdvancedPrinter:IPrinter
+    {
+        public void Fax()
+        {
+           
+            Console.WriteLine("Fax sending....");
+        }
+        public void Print()
+        {
+            Console.WriteLine("Printing...");
+        }
+        public void Scan()
+        {
+           
+            Console.WriteLine("Scanning....");
+        }
+    }
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            
+            Console.WriteLine("Basic Printer:");
+            BasicPrinter printer = new BasicPrinter();
+            printer.Print();
+            //printer.Scan();
+            //printer.Fax();
+
+
+            Console.WriteLine("\n\nAdvanced Printer:");
+            AdvancedPrinter advancedPrinter = new AdvancedPrinter();
+            advancedPrinter.Print();
+            advancedPrinter.Scan();
+            advancedPrinter.Fax();
+
+
+
+
+            Console.ReadLine();
+        }
+    }
+}

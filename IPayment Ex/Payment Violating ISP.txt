@@ -1,0 +1,98 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SingleResponsibilityPrinciple_SRP
+{
+
+    public interface IPayment
+    {
+        void PayWithPayPal();
+        void PayWithBitcoin();
+        void PayWithCreditCard();
+    }
+
+
+    public class clsPayWithPayPal : IPayment
+    {
+        public void PayWithBitcoin()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PayWithCreditCard()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PayWithPayPal()
+        {
+            Console.WriteLine("Paying with paypal...");
+        }
+    }
+    public class clsPayWithBitcoin : IPayment
+    {
+        public void PayWithBitcoin()
+        {
+            Console.WriteLine("Paying with Bitcoin...");
+        }
+
+        public void PayWithCreditCard()
+        {
+            throw new NotImplementedException();
+        }
+
+       public void PayWithPayPal()
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class clsPayWithCreditCard : IPayment
+    {
+        public void PayWithBitcoin()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PayWithCreditCard()
+        {
+            Console.WriteLine("Paying with Credit card...");
+        }
+
+        public void PayWithPayPal()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            clsPayWithBitcoin clsPayWithBitcoin = new clsPayWithBitcoin();
+            clsPayWithCreditCard clsPayWithCreditCard = new clsPayWithCreditCard();
+            clsPayWithPayPal clsPayWithPayPal = new clsPayWithPayPal();
+
+
+            clsPayWithBitcoin.PayWithBitcoin();
+            //clsPayWithBitcoin.PayWithPayPal();
+            //clsPayWithBitcoin.PayWithCreditCard();
+
+
+            clsPayWithCreditCard.PayWithCreditCard();
+            //clsPayWithCreditCard.PayWithBitcoin();
+            //clsPayWithCreditCard.PayWithPayPal();
+
+            clsPayWithPayPal.PayWithPayPal();
+            //clsPayWithPayPal.PayWithBitcoin();
+            //clsPayWithPayPal.PayWithCreditCard();
+
+
+            Console.ReadLine();
+        }
+    }
+}

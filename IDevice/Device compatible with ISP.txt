@@ -1,0 +1,93 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SingleResponsibilityPrinciple_SRP
+{
+    public interface ITakePhoto { void TakePhoto(); }
+    public interface IUseGPS { void UseGPS(); }
+    public interface ISendEmail { void SendEmail(); }
+    public interface IMakeCall { void MakeCall(); }
+
+
+    public class SmartPhone : ITakePhoto, IUseGPS, ISendEmail, IMakeCall
+    {
+        public void MakeCall()
+        {
+            Console.WriteLine("Making call from Smart Phone...");
+        }
+
+        public void SendEmail()
+        {
+            Console.WriteLine("Sending email from smart phone...");
+        }
+
+        public void TakePhoto()
+        {
+            Console.WriteLine("Taking Photo from Smart Phone...");
+        }
+
+        public void UseGPS()
+        {
+            Console.WriteLine("Using GPS from Smart Phone...");
+        }
+    }
+    public class Computer : ISendEmail
+    {
+        public void SendEmail()
+        {
+            Console.WriteLine("Sending email from computer...");
+        }
+    }
+
+    public class Camera : ITakePhoto
+    {
+        public void TakePhoto()
+        {
+            Console.WriteLine("Camera taking photo..");
+        }
+    }
+
+    public class AdvancedCamera : ITakePhoto,ISendEmail
+    {
+        public void SendEmail()
+        {
+            Console.WriteLine("Advanced Camera Sending Email..");
+        }
+
+        public void TakePhoto()
+        {
+            Console.WriteLine("Advanced Camera taking photo..");
+        }
+    } 
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            SmartPhone phone = new SmartPhone();
+            Computer computer = new Computer();
+            Camera camera = new Camera();
+            AdvancedCamera advancedCamera = new AdvancedCamera();   
+
+            phone.MakeCall();
+            phone.SendEmail();
+            phone.TakePhoto();
+            phone.UseGPS();
+
+
+
+            computer.SendEmail();
+
+
+            camera.TakePhoto();
+
+            advancedCamera.TakePhoto();
+            advancedCamera.SendEmail();
+           
+            Console.ReadLine();
+        }
+    }
+}

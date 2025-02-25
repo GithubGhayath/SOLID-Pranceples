@@ -1,0 +1,87 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SingleResponsibilityPrinciple_SRP
+{
+    public interface IDevice
+    {
+        void TakePhoto();
+        void UseGPS();
+        void SendEmail();
+        void MakeCall();
+
+    }
+
+    public class SmartPhone : IDevice
+    {
+        public void MakeCall()
+        {
+            Console.WriteLine("Making call from Smart Phone...");
+        }
+
+        public void SendEmail()
+        {
+            Console.WriteLine("Sending email from smart phone...");
+        }
+
+        public void TakePhoto()
+        {
+            Console.WriteLine("Taking Photo from Smart Phone...");
+        }
+
+        public void UseGPS()
+        {
+            Console.WriteLine("Using GPS from Smart Phone...");
+        }
+    }
+    public class Computer : IDevice
+    {
+        public void MakeCall()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SendEmail()
+        {
+            Console.WriteLine("Sending email from computer...");
+        }
+
+        public void TakePhoto()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UseGPS()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            SmartPhone phone = new SmartPhone();
+            Computer computer = new Computer();
+
+            phone.MakeCall();
+            phone.SendEmail();
+            phone.TakePhoto();
+            phone.UseGPS();
+
+
+
+            computer.SendEmail();
+            //computer.MakeCall();
+            //computer.TakePhoto();
+            //computer.UseGPS();
+
+            Console.ReadLine();
+        }
+    }
+}
